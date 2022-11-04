@@ -5,6 +5,12 @@ class Complex {
     get real() {
         return this.#real;
     }
+    set real(v) {
+        this.#real = v;
+    }
+    set image(v) {
+        this.#image = v;
+    }
     get image() {
         return this.#image;
     }
@@ -16,7 +22,8 @@ class Complex {
         let result = Math.sqrt(Math.pow(this.#real, 2) + Math.pow(this.#image, 2));
         return result;
     }
-    static wk(k, n) {
+    wk(k, n) {
+
         let answer = this.cis(2 * k * Math.PI / n);
         return answer;
     }
@@ -100,15 +107,38 @@ class Complex {
 
 }
 const convertComplexStringToComplexNumber = (s) => {
-    let realPart = s.split("+")[0];
-    let imagePart = s.split("+")[1].split("i")[0];
-    console.log("real part : ", realPart);
-    console.log("image part : ", imagePart);
+    let hasPlus = s.includes('+') == true;
+    let realPart;
+    let imagePart;
+    if (hasPlus) {
+        let splitSign = "+";
+        realPart = Number.parseInt(s.split(splitSign)[0]);
+        imagePart = Number.parseInt(s.split(splitSign)[1].split("i")[0]);
+    }
+    else {
+        let splitSign = "-";
+        realPart = Number.parseInt(s.split(splitSign)[0]);
+        imagePart = (-1) * Number.parseInt(s.split(splitSign)[1].split("i")[0]);
+    }
     let c = new Complex(realPart, imagePart);
     return c;
 }
-let arrRaw = [];
-let n;
+const cis = (x) => {
+    let c = new Complex();
+    //let teta = this.arg();
+    let real = Math.cos(x);
+    let image = Math.sin(x);
+    c.real = real;
+    c.image = image;
+    return c;
+}
+const wk = (k, n) => {
+
+    let answer = cis(2 * k * Math.PI / n);
+    return answer;
+}
+let arrRaw = ["4+5i", "5-8i", "12+10i", "7-13i"];
+let n = 4;
 let arrA = [];
 let arrB = [];
 let ws = [];
@@ -117,7 +147,9 @@ for (let i = 0; i < n; i++) {
     arrA.push(c);
 }
 for (let i = 0; i < n; i++) {
-    let wi = Complex.wk(i, n);
+    let wi = wk(i, n);
+    wi.real = wi.real.toFixed(20);
+    wi.image = wi.image.toFixed(20);
     ws.push(wi);
 }
 
@@ -125,14 +157,12 @@ for (let i = 0; i < n; i++) {
 for (let i = 0; i < n; i++) {
     let bi = new Complex(0, 0);
     for (let j = 0; j < n; j++) {
-        bi = bi.add(arrA[j].multiply(w[i]));
+        let x = arrA[j];
+        bi = bi.add(arrA[j].multiply(ws[i]));
     }
     arrB.push(bi);
 }
-for (let i = 0; i< n;i++){
+for (let i = 0; i < n; i++) {
     arrB[i].print();
 }
 
-let c1 = new Complex(1, 1)
-let c2 = new Complex(3, 6)
-let c3 = c2.pow(0);
