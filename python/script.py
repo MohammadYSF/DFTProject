@@ -1,5 +1,4 @@
 import math
-from typing_extensions import Self
 
 
 class Complex:
@@ -51,16 +50,17 @@ class Complex:
         b = (self.a * complex.b) + (self.b * complex.a)
         return Complex(a, b)
 
-    def print(self):
+    def toString(self):
         answer = ""
         if self.b == 0:
             answer = self.a
         elif self.b < 0:
-            answer = "{real:.10f}-{image:.10f}i".format(
+            answer = "{real:.10f} - {image:.10f}i".format(
                 real=self.a, image=abs(self.b))
         else:
-            answer = "{real:.10f}+{image:.10f}i".format(
+            answer = "{real:.10f} + {image:.10f}i".format(
                 real=self.a, image=abs(self.b))
+        return answer
 
 
 def cis(x):
@@ -89,13 +89,14 @@ def convertComplexStringToComplexNumber(s):
     return c
 
 
+print("============WELCOME TO THE DFT PROJECT============")
 print("enter n :")
 n = int(input())
 arrA = []
 arrB = []
 ws = []
 for i in range(0, n):
-    print("enter a{x} : (x+yi)".format(x=i+1))
+    print("enter a{x} : (x+yi)".format(x=i))
     rawInput = input()
     c = convertComplexStringToComplexNumber(rawInput)
     arrA.append(c)
@@ -111,7 +112,7 @@ for i in range(0, n):
     arrB.append(bi)
 
 for i in range(0, n):
-    arrB[i].print()
+    print("b{index}    :   {s}".format(index=i, s=arrB[i].toString()))
 # def multiple(c1, c2):
 #     real = (c1.a * c2.a - c1.b * c2.b)
 #     image = c1.ac2.b + c1.bc2.a
