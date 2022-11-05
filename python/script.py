@@ -58,7 +58,7 @@ class Complex:
             answer = "{real:.10f} - {image:.10f}i".format(
                 real=self.a, image=abs(self.b))
         else:
-            answer = "{real:.10f} + {image:.10f}i".format(
+            answer = "{real:.10f}  + {image:.10f}i".format(
                 real=self.a, image=abs(self.b))
         return answer
 
@@ -108,7 +108,8 @@ for i in range(0, n):
     bi = Complex(0, 0)
     for j in range(0, n):
         x = arrA[j]
-        bi = bi.add(x.multiply(ws[i]))
+        w = ws[i].pow(j)
+        bi = bi.add(x.multiply(w))
     arrB.append(bi)
 
 for i in range(0, n):
